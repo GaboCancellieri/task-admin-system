@@ -5,6 +5,8 @@ import compression from 'compression';
 import cors from 'cors';
 import { handleErrors } from './middleware/errorHandler';
 import MongoConnection from "./db/mongoConnection";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 // SWAGGER IMPORTS
 import swaggerJsDoc from 'swagger-jsdoc';
@@ -19,7 +21,7 @@ var corsOptions = {
 };
 
 // IMPORT ROUTES
-
+import apiRoutes from "./routes/index";
 
 class Server {
     app: express.Application;
@@ -44,15 +46,14 @@ class Server {
   
     routes(){
         /* use api routes */
-
+        this.app.use('/api', apiRoutes);
     }
   
     start() {
-      this.app.listen(this.app.get('port'), () => {
+      return this.app.listen(this.app.get('port'), () => {
         this.connectToMongo();
         const swaggerDocs = swaggerJsDoc(swaggerOptions);
         this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
       });
     }
 
@@ -70,4 +71,4 @@ class Server {
   
 
 const server = new Server();
-server.start();
+export default server.start();
