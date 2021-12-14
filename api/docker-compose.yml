@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  server:
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "3666:3666"
+    environment:
+      - NODE_ENV=production
+    deploy:
+      restart_policy:
+        condition: on-failure
+    command: bash -c "/usr/wait-for-it.sh --timeout=0 mongo:27017 && node dist/server.js"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
