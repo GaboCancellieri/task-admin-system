@@ -4,11 +4,13 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
 import { handleErrors } from './middleware/errorHandler';
+import MongoConnection from "./db/mongoConnection";
 
 // SWAGGER IMPORTS
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerOptions } from './config/swagger/swaggerOptions';
+import { environmentVariables } from './config/environment/environmentVariables';
 
 // CORS OPTIONS
 var corsOptions = {
@@ -25,7 +27,6 @@ class Server {
     constructor() {
         this.app = express();
         this.app.set('port', process.env.PORT || 3666);
-
         this.config();
         this.routes();
     }
@@ -43,13 +44,27 @@ class Server {
   
     routes(){
         /* use api routes */
+
     }
   
     start() {
       this.app.listen(this.app.get('port'), () => {
+        this.connectToMongo();
         const swaggerDocs = swaggerJsDoc(swaggerOptions);
         this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
       });
+    }
+
+    connectToMongo() {
+        //Creating the DB when the server starts.
+        try {
+            MongoConnection.connectToMongo();
+            console.log(`Tasks API listening at http://${environmentVariables.apiHost}:${environmentVariables.apiPort}`);
+        } catch (error) {
+            console.error(error);
+            throw new Error("Cannot connect with the database");
+        }
     }
 }
   
