@@ -1,6 +1,7 @@
 import getTasks from "../services/tasks/getTasks";
 import { NextFunction, Request, Response } from "express";
 import { BasicError } from "../utils/basicError";
+import { putTask } from "../services/tasks/putTask";
 
 export async function getTasksController (req: Request, res: Response, next: NextFunction) {
   const { quantity } = req.query;
@@ -23,8 +24,28 @@ export async function getTasksController (req: Request, res: Response, next: Nex
     console.error(error);
     next(error);
   }
-};
+}
 
 export async function putTasksController (req: Request, res: Response, next: NextFunction) {
-
-};
+  const { id } = req.params;
+  const { title } = req.body;
+  try {
+    if(id && title) {
+        const newTask = {
+          id,
+          title,
+        }
+        const createdTask = await putTask(newTask);
+        if (createdTask) {
+          res.status(201).json(createdTask);
+        } else {
+          throw new BasicError("An error ocurred while completing task", 400);
+        }
+      } else {
+      throw new BasicError(`Wrong parameters: either the id: ${id} or the title: ${title} is incorrect.`, 400);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
