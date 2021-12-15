@@ -7,7 +7,8 @@ import MongoConnection from "../../src/db/mongoConnection";
 import chai from "chai";
 import chaiHttp from "chai-http";
 import server from "../../src/server";
-var expect = require("chai").expect;
+import { expect } from "chai";
+import * as crypto from 'crypto';
 
 chai.use(chaiHttp);
 
@@ -69,6 +70,34 @@ describe("Tasks [Integration Testing]", () => {
         .request(server)
         .get("/api/tasks")
         .query({ quantity: "asdasd" })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+  });
+
+  describe("/PUT tasks", () => {
+    it("it should PUT a new completed task", (done) => {
+      const taskId = crypto.randomUUID();
+      const taskTitle = "Task A";
+      chai
+        .request(server)
+        .put(`/api/tasks/${taskId}`)
+        .send({ title: taskTitle })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res.body.id).be.equal(taskId);
+          expect(res.body.title).be.equal(taskTitle);
+          done();
+        });
+    });
+    it("it should not PUT a new completed task, title is undefined", (done) => {
+      const taskId = crypto.randomUUID();
+      chai
+        .request(server)
+        .put(`/api/tasks/${taskId}`)
+        .send({ title: undefined })
         .end((err, res) => {
           expect(res).to.have.status(400);
           done();

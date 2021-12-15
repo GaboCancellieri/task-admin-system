@@ -8,14 +8,10 @@ import MongoConnection from "./db/mongoConnection";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-// SWAGGER IMPORTS
-import swaggerJsDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
-import { swaggerOptions } from './config/swagger/swaggerOptions';
 import { environmentVariables } from './config/environment/environmentVariables';
 
 // CORS OPTIONS
-var corsOptions = {
+const corsOptions = {
     origin: process.env.ALLOWED_ORIGINS || `http://${process.env.API_HOST}:${process.env.API_PORT}`,
     optionsSuccessStatus: 200, // For legacy browser support
 };
@@ -52,8 +48,6 @@ class Server {
     start() {
       return this.app.listen(this.app.get('port'), () => {
         this.connectToMongo();
-        const swaggerDocs = swaggerJsDoc(swaggerOptions);
-        this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
       });
     }
 

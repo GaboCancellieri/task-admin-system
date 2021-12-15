@@ -1,7 +1,6 @@
 import tasksTitleAPI from "../../utils/tasksTitleAPI";
 import { BasicError } from "../../utils/basicError";
 import * as crypto from "crypto";
-import { environmentVariables } from "../../config/environment/environmentVariables";
 import { Task } from "../../interfaces/Task";
 /**
  * Generate new tasks from the database.
@@ -27,7 +26,7 @@ async function getTasks(numberOfTasks: number): Promise<Task[]> {
       throw new BasicError("Internal Server Error", 500);
     }
   }
-};
+}
 
 /**
  * Function to get a list of titles the Lorem Faker API.
@@ -36,11 +35,11 @@ async function getTasks(numberOfTasks: number): Promise<Task[]> {
  */
  async function fetchTitlesFromAPI(numberOfTasks: number): Promise<string[]> {
   try {
-    let response = await tasksTitleAPI.get('/api', { params: { quantity: numberOfTasks }});
+    const response = await tasksTitleAPI.get('/api', { params: { quantity: numberOfTasks }});
     return response.data;
   } catch (error) {
     throw new BasicError("Error while calling the Lorem Faker API", 504);
   }
-};
+}
 
 export default getTasks;

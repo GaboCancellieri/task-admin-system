@@ -5,7 +5,9 @@ process.env.LOREM_FAKER_API_URL = "https://lorem-faker.vercel.app";
 import MongoConnection from "../../src/db/mongoConnection";
 
 import getTasks from "../../src/services/tasks/getTasks";
-var expect = require("chai").expect;
+import { expect } from 'chai';
+import { putTask } from "../../src/services/tasks/putTask";
+import * as crypto from 'crypto';
 
 describe("Tasks [Unit Testing]", () => {
   // clean the database (tasks collection)
@@ -36,6 +38,21 @@ describe("Tasks [Unit Testing]", () => {
       const tasks = await getTasks(500);
       expect(tasks).be.a("array");
       expect(tasks.length).be.equal(500);
+    });
+  });
+
+  describe("Put Tasks Service", () => {
+    it("it should PUT a new completed task", async () => {
+      const task = {
+        id: crypto.randomUUID(),
+        title: 'lorem ipsum',
+      }
+      const completedTask = await putTask(task);
+      expect(completedTask).not.be.a("undefined");
+      if (completedTask) {
+        expect(completedTask.id).be.equal(task.id);
+        expect(completedTask.title).be.equal(task.title);
+      }
     });
   });
 });
