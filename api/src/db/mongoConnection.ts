@@ -18,7 +18,7 @@ class MongoConnection {
   
         //Check if the tasks collections is created
         this.db.listCollections({ name: "tasks" })
-          .next(async function (err: any, collinfo: any) {
+          .next(async function (err, collinfo) {
             if (err) {
               throw new Error(
                 "Error when trying to list the collection tasks of the DB"
