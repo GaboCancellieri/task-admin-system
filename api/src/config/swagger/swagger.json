@@ -1,3 +1,33 @@
 {
-    
+    "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+    },
+    "Tasks": {
+        "type": "array",
+        "items": {
+            "$ref": "#/definitions/Task"
+        }
+    },
+    "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+    }
 }
