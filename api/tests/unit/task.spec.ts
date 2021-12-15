@@ -7,7 +7,8 @@ import MongoConnection from "../../src/db/mongoConnection";
 import getTasks from "../../src/services/tasks/getTasks";
 import { expect } from 'chai';
 import { putTask } from "../../src/services/tasks/putTask";
-import * as crypto from 'crypto';
+
+let mockTask = {"id":"2d86af12-c6df-47a4-b451-17791facaa12", "title":"sed beatae doloremque", "isComplete": false}
 
 describe("Tasks [Unit Testing]", () => {
   // clean the database (tasks collection)
@@ -16,6 +17,7 @@ describe("Tasks [Unit Testing]", () => {
     if (MongoConnection.db) {
       const collectionTasks = MongoConnection.db.collection("tasks");
       await collectionTasks.deleteMany({});
+      await collectionTasks.insertOne(mockTask);
     }
   });
 
@@ -29,29 +31,44 @@ describe("Tasks [Unit Testing]", () => {
   });
 
   describe("Get Tasks Service", () => {
+    it("it should GET the same task -> idempotent", async () => {
+      const tasks1 = await getTasks(1);
+      const tasks2 = await getTasks(1);
+      if (tasks1 && tasks2) {
+        expect(tasks1[0].id).be.equal(tasks2[0].id);
+        expect(tasks1[0].title).be.equal(tasks2[0].title);
+        expect(tasks1[0].isComplete).be.equal(tasks2[0].isComplete);
+      }
+    });
     it("it should GET a array of three tasks", async () => {
       const tasks = await getTasks(3);
-      expect(tasks).be.a("array");
-      expect(tasks.length).be.equal(3);
+      if (tasks) {
+        expect(tasks).be.a("array");
+        expect(tasks.length).be.equal(3);
+      }
     });
     it("it should GET a array of 500 tasks", async () => {
       const tasks = await getTasks(500);
-      expect(tasks).be.a("array");
-      expect(tasks.length).be.equal(500);
+      if (tasks) {
+        expect(tasks).be.a("array");
+        expect(tasks.length).be.equal(500);
+      }
     });
   });
 
   describe("Put Tasks Service", () => {
     it("it should PUT a new completed task", async () => {
-      const task = {
-        id: crypto.randomUUID(),
-        title: 'lorem ipsum',
+      const updateMocktask = {
+        id: mockTask.id,
+        title: 'A mock task',
+        isComplete: true,
       }
-      const completedTask = await putTask(task);
-      expect(completedTask).not.be.a("undefined");
-      if (completedTask) {
-        expect(completedTask.id).be.equal(task.id);
-        expect(completedTask.title).be.equal(task.title);
+      const updatedTask = await putTask(updateMocktask);
+      expect(updatedTask).not.be.a("undefined");
+      if (updatedTask) {
+        expect(updatedTask.id).be.equal(updateMocktask.id);
+        expect(updatedTask.title).be.equal(updateMocktask.title);
+        expect(updatedTask.isComplete).be.equal(updateMocktask.isComplete);
       }
     });
   });
