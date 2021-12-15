@@ -46,17 +46,26 @@ tasksRouter.get("/", getTasksController);
  *         description: ID of task to create.
  *         type: string
  *       - in: body
- *         name: status
+ *         name: taskToUpdate
  *         required: true
+ *         description: Task to update.
  *         schema:
- *           type: string
+ *           type: object
+ *           required:
+ *             - title
+ *             - isComplete
+ *           properties:
+ *             title:
+ *               type: string
+ *             isComplete:
+ *               type: boolean
  *     responses:
  *       '200':
  *         description: A list of tasks
  *         schema:
  *           $ref: '#/definitions/Task'
  *       '400':
- *         description: An error ocurred while completing task
+ *         description: An error ocurred while updating task
  *         schema:
  *           $ref: '#/definitions/Error'
  */

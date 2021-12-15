@@ -9,8 +9,9 @@ import chaiHttp from "chai-http";
 import server from "../../src/server";
 import { expect } from "chai";
 import * as crypto from 'crypto';
-
 chai.use(chaiHttp);
+
+let mockTask = {"id":"2d86af12-c6df-47a4-b451-17791facaa12", "title":"sed beatae doloremque", "isComplete": false}
 
 describe("Tasks [Integration Testing]", () => {
   // clean the database (tasks collection)
@@ -19,6 +20,7 @@ describe("Tasks [Integration Testing]", () => {
     if (MongoConnection.db) {
       const collectionTasks = MongoConnection.db.collection("tasks");
       await collectionTasks.deleteMany({});
+      await collectionTasks.insertOne(mockTask);
     }
   });
 
@@ -79,16 +81,16 @@ describe("Tasks [Integration Testing]", () => {
 
   describe("/PUT tasks", () => {
     it("it should PUT a new completed task", (done) => {
-      const taskId = crypto.randomUUID();
-      const taskTitle = "Task A";
+      const taskTitle = "An updated task"
       chai
         .request(server)
-        .put(`/api/tasks/${taskId}`)
-        .send({ title: taskTitle })
+        .put(`/api/tasks/${mockTask.id}`)
+        .send({ title: taskTitle, isComplete: true })
         .end((err, res) => {
-          expect(res).to.have.status(201);
-          expect(res.body.id).be.equal(taskId);
+          expect(res).to.have.status(200);
+          expect(res.body.id).be.equal(mockTask.id);
           expect(res.body.title).be.equal(taskTitle);
+          expect(res.body.isComplete).be.equal(true);
           done();
         });
     });

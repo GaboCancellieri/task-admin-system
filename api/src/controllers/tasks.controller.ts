@@ -9,7 +9,7 @@ export async function getTasksController (req: Request, res: Response, next: Nex
   try {
     if(!isNaN(numberOfTasks)) {
       if (numberOfTasks > 1000) {
-        throw new BasicError("Can't generate more than 1000 tasks", 400);
+        throw new BasicError("Can't get more than 1000 tasks", 400);
       }
       const tasks = await getTasks(numberOfTasks);
       if (tasks) {
@@ -28,21 +28,22 @@ export async function getTasksController (req: Request, res: Response, next: Nex
 
 export async function putTasksController (req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
-  const { title } = req.body;
+  const { title, isComplete } = req.body;
   try {
-    if(id && title) {
-        const newTask = {
-          id,
-          title,
-        }
-        const createdTask = await putTask(newTask);
-        if (createdTask) {
-          res.status(201).json(createdTask);
-        } else {
-          throw new BasicError("An error ocurred while completing task", 400);
-        }
+    if(title && isComplete && Object.keys(req.body).length === 2) {
+      const taskToUpdate = {
+        id,
+        title,
+        isComplete
+      }
+      const updatedTask = await putTask(taskToUpdate);
+      if (updatedTask) {
+        res.status(200).json(updatedTask);
       } else {
-      throw new BasicError(`Wrong parameters: either the id: ${id} or the title: ${title} is incorrect.`, 400);
+        throw new BasicError("An error ocurred while updating task", 400);
+      }
+    } else {
+      throw new BasicError("Bad Request", 400);
     }
   } catch (error) {
     console.error(error);
