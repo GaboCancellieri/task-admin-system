@@ -17,7 +17,7 @@ export const environmentVariables = {
   dbUrl: DB_URL || "localhost",
   dbPort: DB_PORT || 27017,
   dbName: DB_NAME || "tasks",
-  allowedOrigins: ALLOWED_ORIGINS || "http://localhost:3666",
+  allowedOrigins: ALLOWED_ORIGINS || "*",
   loremFakerAPI: LOREM_FAKER_API_URL,
   mongoContainerName: MONGO_CONTAINER_NAME || "mongo",
 };

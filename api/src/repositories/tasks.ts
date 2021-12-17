@@ -67,8 +67,6 @@ export async function findAll() {
     const collectionTasks = getTasksCollection();
     if (collectionTasks) {
       const insertResult = await collectionTasks.insertMany(tasks);
-      //to return the inserted objects (_id,name,show)
-      // const insertedObjects = insertResult.ops;
       result = tasks;
     }
     return result;

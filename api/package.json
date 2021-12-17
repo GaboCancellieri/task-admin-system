@@ -2,12 +2,12 @@
   "name": "task-admin-api",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/server.js",
+  "main": "./build/server.js",
   "scripts": {
     "dev-ts": "tsc -w",
-    "dev": "nodemon ./dist/server.js",
+    "dev": "nodemon ./build/server.js",
     "build": "tsc",
-    "start": "node ./dist/server.js",
+    "start": "node ./build/server.js",
     "lint": "eslint . --ext .ts",
     "test": "npx jest"
   },

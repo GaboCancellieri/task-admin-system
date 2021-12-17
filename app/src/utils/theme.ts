@@ -1,0 +1,15 @@
+export const colors = {
+    almostWhite: '#F9F9F9',
+    black: '#000000',
+    dangerRed: '#EF4444',
+    darkPurple: '#2B193D',
+    independence: '#484D6D',
+    primaryPurple:'#6366F1',
+    secondaryGray: '#64748B',
+    spaceCadet: '#2C365E',
+    successGreen: '#22C55E',
+    tuscany: '#C5979D',
+    warningYellow: '#F59E0B',
+    winterGreen: '#4B8F8C',
+    white: '#FFFFFF',
+  };

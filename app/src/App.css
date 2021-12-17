@@ -1,0 +1,47 @@
+.App {
+  text-align: center;
+}
+
+h1 {
+  text-align: left;
+}
+
+.App-logo {
+  height: 80px;
+}
+
+.App-header {
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@font-face {
+  font-family: 'Raleway-Regular';
+  src: local('Raleway-Regular'), url(./assets/fonts/Raleway-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Raleway-Medium';
+    src: local('Raleway-Medium'), url(./assets/fonts/Raleway-Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Raleway-Bold';
+    font-weight: 900;
+    src: local('Raleway-Bold'), url(./assets/fonts/Raleway-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway-Italic';
+  src: local('Raleway-Italic'), url(./assets/fonts/Raleway-Italic.ttf) format('truetype');
+}
