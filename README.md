@@ -5,7 +5,8 @@ A small system which helps you to manage and generate tasks.
 1. [Technologies](#technologies)
 2. [Setup APP](#setupAPP)
 3. [Setup API](#setupAPI)
-4. [Docker](#docker)
+4. [Dockerize APP](#dockerizeAPP)
+4. [Dockerize API](#dockerizeAPI)
 5. [Documentation](#documentation)
 
 ## Technologies
