@@ -28,6 +28,7 @@ The system's backend is build up with the following technologies:
 * [Helmet](https://github.com/helmetjs/helmet): 4.6.0
 * [Compression](https://github.com/expressjs/compression): 1.7.4
 * [Typescript](https://github.com/Microsoft/TypeScript): 3.3.3
+* [SwaggerJsDoc](https://github.com/Surnet/swagger-jsdoc): 6.1.0
 
 
 ## Setup APP
