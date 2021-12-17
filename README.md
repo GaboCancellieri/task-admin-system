@@ -186,6 +186,11 @@ docker-compose down
 In this section, i will describe the available endpoints:
 
 ### Tasks Admin API
+#### Endpoint
+
+`GET /api/docs`
+
+This endpoint will render the swagger documentation app and will show a more detailed description of the endpoints.
 
 #### Endpoint
 
