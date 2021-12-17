@@ -1,16 +1,14 @@
-version: "3.3"
+version: "3.4"
 services:
-  server:
-    build: .
-    depends_on:
-      - mongo
+  task_admin_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task_admin_api
+    expose:
+      - '3666'
     ports:
-      - "3666:3666"
-    environment:
-      - NODE_ENV=production
-    deploy:
-      restart_policy:
-        condition: on-failure
+      - '3666:3666'
     command: bash -c "/usr/wait-for-it.sh --timeout=0 mongo:27017 && node dist/server.js"
   mongo:
     image: mongo
