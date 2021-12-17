@@ -32,7 +32,6 @@ const TasksScreen = () => {
     try {
       const { success, data } = await getTasks(num);
       if (success) {
-        console.log(data)
         setTasks([...data]);
       } else {
           setShowErrorAlert(true);

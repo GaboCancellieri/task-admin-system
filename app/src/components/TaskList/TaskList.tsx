@@ -17,7 +17,6 @@ const TaskList = ({
   const handleCompleteTask = async (taskToUpdate: ITask) => {
     taskToUpdate.isComplete = true;
     const { success, data } = await putTask(taskToUpdate);
-    console.log(data);
     if (success) {
       const index = tasks.findIndex((task) => task.id === data.id)
       tasks[index] = Object.assign(data);
