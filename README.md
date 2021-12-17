@@ -3,10 +3,10 @@ A small system which helps you to manage and generate tasks.
 
 # Table of Contents
 1. [Technologies](#technologies)
-2. [Setup APP](#setupAPP)
-3. [Setup API](#setupAPI)
-4. [Dockerize APP](#dockerizeAPP)
-4. [Dockerize API](#dockerizeAPI)
+2. [Setup APP](#setup-app)
+3. [Setup API](#setup-api)
+4. [Dockerize APP](#dockerize-app)
+4. [Dockerize API](#dockerize-api)
 5. [Documentation](#documentation)
 
 ## Technologies
